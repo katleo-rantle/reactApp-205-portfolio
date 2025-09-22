@@ -23,7 +23,7 @@ const Hero = () => {
               ]}
               wrapper='span'
               cursor={true}
-              repeat={1}
+              repeat={0}
               style={{ fontSize: '2em', display: 'inline-block' }}
             />
           </h1>

@@ -1,4 +1,4 @@
-import { FaGithubSquare, FaExternalLinkAlt, FaTwitterSquare } from "react-icons/fa"
+import { FaGithubSquare } from "react-icons/fa"
 import {TbWorldWww} from 'react-icons/tb'
 
 const ProjectsCard = (props) => {
@@ -6,7 +6,7 @@ const ProjectsCard = (props) => {
  
  const { img, url, urlGithub, title, techStack } = props;
   return (
-    <article className='bg-white rounded-lg shadow-md block hover:shadow-2xl duration-300'>
+    <article className='bg-white rounded-lg shadow-md block hover:shadow-2xl duration-300' >
       <img
         src={img}
         alt={title}
