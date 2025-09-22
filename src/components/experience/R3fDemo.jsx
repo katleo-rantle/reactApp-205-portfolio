@@ -4,23 +4,19 @@ import {
   OrbitControls,
   PerspectiveCamera,
 } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Suspense, useRef } from 'react';
 import { angleToRadian } from '../../utils/angle';
+import { HDRLoader } from 'three/examples/jsm/Addons.js';
+import { BackSide, EquirectangularReflectionMapping } from 'three';
 
 const Cube = () => {
-  const meshRef = useRef(null);
-  useFrame(() => {
-    if (!meshRef.current) {
-      return;
-    }
-    meshRef.current.rotation.x += 0.01;
-    meshRef.current.rotation.y += 0.01;
-  });
+  const texture = useLoader(HDRLoader, '/hdri/house.exr')
+  texture.mapping = EquirectangularReflectionMapping
   return (
-    <mesh ref={meshRef} position={[0, 2, 0]}>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial color='hotpink' />
+    <mesh scale={[-1,1,1]}>
+      <boxGeometry args={[10, 10, 10]} />
+      <meshStandardMaterial map={texture} side={BackSide} />
     </mesh>
   );
 };
@@ -55,10 +51,13 @@ function R3fDemo() {
           <directionalLight intensity={1} position={[2, 5, 2]} />
 
           <OrbitControls enablePan={true} minDistance={1} maxDistance={50} />
-          <Environment files={'/hdri/house.exr'} background />
+          <Environment
+            files={'/hdri/house.exr'}
+            background
+          />
           <Cube />
-          <Floor />
-          <Room />
+          {/* <Floor /> */}
+          {/* <Room /> */}
         </Suspense>
       </Canvas>
     </div>
