@@ -9,6 +9,13 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Suspense, useMemo, useRef } from 'react';
 import { angleToRadian } from '../../utils/angle';
 import { BackSide, MeshBasicMaterial } from 'three';
+import { RobotModel } from './RobotModel';
+import { ConsoleModel } from './ConsoleModel';
+import { DeskModel } from './DeskModel';
+import { LaptopModel } from './LaptopModel';
+import { BikeModel } from './BikeModel';
+import { PlantModel } from './PlantModel';
+
 
 const minPolarAngle = angleToRadian(15);
 const maxPolarAngle = angleToRadian(89);
@@ -48,8 +55,8 @@ const Room = () => {
   return (
     // <mesh rotation-x={-Math.PI/2}>
     <mesh rotation={[-angleToRadian(90), 0, 0]} position={[9.35, 3.75 , 2.85]}>
-      <boxGeometry args={[1.25, 3.58,7.5]} />
-      <meshStandardMaterial color='brown' />
+      <boxGeometry args={[1.5, 3.58,7.5]} />
+      <meshStandardMaterial color='#B19981' />
     </mesh>
   );
 };
@@ -72,7 +79,13 @@ function R3fDemo() {
 
           <Cube />
           {/* <Floor /> */}
-          <Room />
+          {/* <Room /> */}
+          <RobotModel  />
+          <ConsoleModel  />
+          <DeskModel  />
+          <LaptopModel  />
+          <BikeModel  />
+          <PlantModel  />
         </Suspense>
       </Canvas>
     </div>
