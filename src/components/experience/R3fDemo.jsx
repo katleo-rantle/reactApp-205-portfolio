@@ -15,6 +15,7 @@ import { DeskModel } from './DeskModel';
 import { LaptopModel } from './LaptopModel';
 import { BikeModel } from './BikeModel';
 import { PlantModel } from './PlantModel';
+import { AvatarModel } from './AvatarModel';
 
 
 const minPolarAngle = angleToRadian(15);
@@ -86,6 +87,7 @@ function R3fDemo() {
           <LaptopModel  />
           <BikeModel  />
           <PlantModel  />
+          <AvatarModel  />
         </Suspense>
       </Canvas>
     </div>
