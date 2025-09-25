@@ -16,6 +16,7 @@ export function LaptopModel(props) {
       rotation={[0, -angleToRadian(45), 0]}
     >
       <group name='e9b7f83138d74896be663b0d70f0f6fdfbx' scale={0.01}>
+        {/* keyboard */}
         <group
           name='Plane002'
           position={[0, 28.869, 312.193]}
@@ -38,10 +39,37 @@ export function LaptopModel(props) {
             material={materials.digital_display_sides}
           />
         </group>
+        {/* screens */}
         <group
           name='Plane001'
           position={[0, 381.812, -82.657]}
           rotation={[-0.229, 0, 0]}
+          scale={100}
+        >
+          <mesh
+            name='Plane001_digital_displays_0'
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane001_digital_displays_0.geometry}
+            material={materials.digital_displays}
+          />
+            {/* <meshBasicMaterial map={screenTexture} />
+          </mesh> */}
+          <mesh
+            name='Plane001_digital_display_sides_0'
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane001_digital_display_sides_0.geometry}
+            material={materials.digital_display_sides}
+          />
+            {/* <meshBasicMaterial map={screenTexture} />
+          </mesh>   */}
+        </group>
+        {/* 2nd screen */}
+        <group
+          name='Plane0012'
+          position={[440, 420.812, 82.657]}
+          rotation={[-0.229, 15, 0]}
           scale={100}
         >
           <mesh

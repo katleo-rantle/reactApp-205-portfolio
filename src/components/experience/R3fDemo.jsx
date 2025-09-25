@@ -19,7 +19,7 @@ import { AvatarModel } from './AvatarModel';
 import { ChairModel } from './ChairModel';
 import { MouseModel } from './MouseModel';
 
-const minPolarAngle = angleToRadian(15);
+const minPolarAngle = angleToRadian(50);
 const maxPolarAngle = angleToRadian(89);
 
 const Cube = () => {
@@ -40,7 +40,7 @@ const Cube = () => {
 
   return (
     <mesh scale={[-2, 1, 2]} material={materials} position={[0, 5, 0]}>
-      <boxGeometry args={[10, 10, 15]} />
+      <boxGeometry args={[10, 10, 12]} />
     </mesh>
   );
 };
@@ -90,7 +90,7 @@ function R3fDemo() {
           <OrbitControls
             target={targetPosition}
             enablePan={true}
-            minDistance={3}
+            minDistance={6}
             maxDistance={10}
             minPolarAngle={minPolarAngle}
             maxPolarAngle={maxPolarAngle}

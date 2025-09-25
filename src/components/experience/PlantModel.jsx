@@ -5,7 +5,7 @@ export function PlantModel(props) {
   const { nodes, materials } = useGLTF('/models/lowpoly_plant_pot.glb');
   return (
     <group dispose={null}>
-      <group scale={0.06} position={[8.5,0,-13.5]}>
+      <group scale={0.06} position={[9,0,-11]}>
         <mesh
           castShadow
           receiveShadow
