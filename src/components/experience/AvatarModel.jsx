@@ -1,10 +1,31 @@
-import React, { useRef } from 'react';
-import { useGLTF } from '@react-three/drei';
+import React, { useEffect, useRef } from 'react';
+import { useAnimations, useFBX, useGLTF } from '@react-three/drei';
+import { angleToRadian } from '../../utils/angle';
 
 export function AvatarModel(props) {
   const { nodes, materials } = useGLTF('/models/avatar.glb');
+  const {animations:typingAnimation} = useFBX('animations/Typing.fbx')
+  const animationGroup = useRef()
+
+  // console.log(typingAnimation);
+
+  typingAnimation[0].name = 'typing' // change name from mixamo.com
+
+  const {actions} = useAnimations(typingAnimation, animationGroup) // create actions to be able to play animation
+
+  //play action
+  useEffect(()=>{
+    actions['typing'].reset().play()
+  },[])
+  
   return (
-    <group  dispose={null} scale={3.5} position={[0,0,-10]}>
+    <group
+      dispose={null}
+      scale={4}
+      position={[-.5, 0, 3]}
+      ref={animationGroup}
+      rotation={[0, angleToRadian(135), angleToRadian(2.5)]}
+    >
       <primitive object={nodes.Hips} />
       <skinnedMesh
         geometry={nodes.Body_Mesh.geometry}
