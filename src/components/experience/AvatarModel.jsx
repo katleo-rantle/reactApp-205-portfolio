@@ -27,7 +27,7 @@ export function AvatarModel(props) {
   useFrame((state) => {
     Object.values(actions).forEach((action) => {
       if (action.isRunning()) {
-        console.log(action._clip.name)
+        // console.log(action._clip.name)
         clipName = action._clip.name;
       };
     });

@@ -5,7 +5,7 @@ import { angleToRadian } from '../../utils/angle';
 export function RobotModel(props) {
   const { nodes, materials } = useGLTF('/models/ai_robot.glb');
   return (
-    <group dispose={null} scale={5} position={[0, 0, 10]} rotation={[0, angleToRadian(180), 0]}>
+    <group dispose={null} scale={5} position={[2, 0, 10]} rotation={[0, angleToRadian(180), 0]}>
       <group position={[0, 0.24, 0.012]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
           castShadow
@@ -52,7 +52,7 @@ export function RobotModel(props) {
           />
         </group>
       </group>
-      <group position={[-0.049, 0.047, -0.003]} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* <group position={[-0.049, 0.047, -0.003]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
           castShadow
           receiveShadow
@@ -65,7 +65,7 @@ export function RobotModel(props) {
           geometry={nodes.RightWheel_wheelHolderMAt_0.geometry}
           material={materials.wheelHolderMAt}
         />
-      </group>
+      </group> */}
       <group position={[-0.054, 0.145, -0.002]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
           castShadow
@@ -98,7 +98,7 @@ export function RobotModel(props) {
           material={materials.HandMad}
         />
       </group>
-      <group position={[0.049, 0.047, -0.003]} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* <group position={[0.049, 0.047, -0.003]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
           castShadow
           receiveShadow
@@ -111,7 +111,7 @@ export function RobotModel(props) {
           geometry={nodes.LeftWheel_wheelHolderMAt_0.geometry}
           material={materials.wheelHolderMAt}
         />
-      </group>
+      </group> */}
       <group position={[0.054, 0.145, -0.002]} rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
           castShadow

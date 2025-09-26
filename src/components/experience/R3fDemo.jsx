@@ -1,5 +1,6 @@
 import {
   Environment,
+  Float,
   Html,
   OrbitControls,
   PerspectiveCamera,
@@ -18,8 +19,9 @@ import { PlantModel } from './PlantModel';
 import { AvatarModel } from './AvatarModel';
 import { ChairModel } from './ChairModel';
 import { MouseModel } from './MouseModel';
+import { LightModel } from './LightModel';
 
-const minPolarAngle = angleToRadian(50);
+const minPolarAngle = angleToRadian(80);
 const maxPolarAngle = angleToRadian(89);
 
 const Cube = () => {
@@ -73,14 +75,14 @@ function R3fDemo() {
   //     console.log(orbitControlsRef.current.target)
   //   }
   // }, []);
-  const targetPosition = [0,4,0]
+  const targetPosition = [0,6,2]
   // const targetPosition = [0,0,0]
 
   return (
     <div className='h-screen w-full'>
       <Canvas shadows>
         <Suspense fallback={null}>
-          <PerspectiveCamera makeDefault position={[100, 500, 0]} />
+          <PerspectiveCamera makeDefault position={[4, 2, -10]} />
           <ambientLight intensity={Math.PI / 2} />
           {/* <ambientLight args={["white",1]}  /> */}
 
@@ -90,7 +92,7 @@ function R3fDemo() {
           <OrbitControls
             target={targetPosition}
             enablePan={true}
-            minDistance={6}
+            minDistance={7}
             maxDistance={10}
             minPolarAngle={minPolarAngle}
             maxPolarAngle={maxPolarAngle}
@@ -101,15 +103,18 @@ function R3fDemo() {
           <Cube />
           {/* <Floor /> */}
           {/* <Room /> */}
-          <RobotModel />
+          <Float speed={0.5} floatingRange={[1,2]}>
+            <RobotModel />
+          </Float>
           <ConsoleModel />
           <DeskModel />
           <LaptopModel />
           <BikeModel />
           <PlantModel />
           <AvatarModel />
-          <ChairModel/>
-          <MouseModel/>
+          <ChairModel />
+          <MouseModel />
+          <LightModel />
         </Suspense>
       </Canvas>
     </div>

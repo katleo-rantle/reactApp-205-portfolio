@@ -8,7 +8,7 @@ export function BikeModel(props) {
   );
   return (
     <group dispose={null}>
-      <group scale={0.035} position={[-7,0,12]} rotation={[angleToRadian(30), angleToRadian(90), 0]}>
+      <group scale={0.035} position={[-7,0,8]} rotation={[angleToRadian(30), angleToRadian(90), 0]}>
         <group rotation={[-Math.PI / 2, 0, 0]}>
           <mesh
             castShadow
