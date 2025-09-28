@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
 import { angleToRadian } from '../../utils/angle';
 
+import { useFetchProjects } from '../../utils/fectchProjects';
+
+
 export function LaptopModel(props) {
   const { nodes, materials } = useGLTF(
     '/models/sci_-_fi_computer_game_ready.glb'
@@ -90,6 +93,31 @@ export function LaptopModel(props) {
           />
             {/* <meshBasicMaterial map={screenTexture} />
           </mesh>   */}
+        </group>
+        {/*  screen loop > grid */}
+        
+        <group
+          name='Plane003'
+          position={[-740, 520.812, 92.657]}
+          rotation={[0, 7, 0]}
+          scale={100}
+        >
+          <mesh
+            name='Plane003_digital_displays_0'
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane001_digital_displays_0.geometry}
+            material={materials.digital_displays}
+          />
+            
+          <mesh
+            name='Plane003_digital_display_sides_0'
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane001_digital_display_sides_0.geometry}
+            material={materials.digital_display_sides}
+          />
+            
         </group>
         {/* <group
           name='Circle'

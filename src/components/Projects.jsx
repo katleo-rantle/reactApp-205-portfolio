@@ -14,7 +14,6 @@ const Projects = () => {
        return <ProjectsCard key={project.id} {...project}/>
       })}
      </div>)}
-
     </section>
   )
 }

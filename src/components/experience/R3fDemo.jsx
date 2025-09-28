@@ -103,7 +103,7 @@ function R3fDemo() {
           <Cube />
           {/* <Floor /> */}
           {/* <Room /> */}
-          <Float speed={0.5} floatingRange={[1,2]}>
+          <Float speed={5} floatingRange={[1.5,2]}>
             <RobotModel />
           </Float>
           <ConsoleModel />
