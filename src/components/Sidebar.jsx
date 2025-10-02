@@ -7,13 +7,20 @@ const Sidebar = () => {
  const linksRef = useRef([]);
  const navRef = useRef(null);
  const contactRef = useRef(null);
- const BottomLineRef = useRef(null);
- const TopLineRef = useRef(null);
- const timelineRef = useRef(null);
+ const bottomLineRef = useRef(null);
+ const topLineRef = useRef(null);
+ const tlSidebarRef = useRef(null);
+ const tlIconRef = useRef(null);
  const [isOpen, setIsOpen] = useState(false)
 
  const toggleMenu = () =>{
-  isOpen ? timelineRef.current.reverse() : timelineRef.current.play()
+  if(!isOpen){
+    tlSidebarRef.current.reverse();
+    tlIconRef.current.reverse();
+  } else {
+    tlSidebarRef.current.play();
+    tlIconRef.current.play();
+  }
   setIsOpen(!isOpen)
  }
 
@@ -21,9 +28,11 @@ const Sidebar = () => {
   gsap.set(navRef.current,{xPercent:100})
   gsap.set([linksRef.current,contactRef.current],{autoAlpha:0, x:-20})
   
-  timelineRef.current = gsap.timeline({paused:true}).to(navRef.current,{xPercent:0, duration:1, ease:"power3.out"})
+  tlSidebarRef.current = gsap.timeline({paused:true}).to(navRef.current,{xPercent:0, duration:1, ease:"power3.out"})
   .to(linksRef.current,{autoAlpha:1, x:0, stagger:0.1, duration:0.5, ease:"power2.out"}, "<")
   .to(contactRef.current, {autoAlpha:1, x:0, duration:0.5, ease:"power2.out"}, "<0.2")
+
+  tlIconRef.current = gsap.timeline({paused:true}).to(topLineRef.current, {rotation:45, y:8, duration:0.3, ease:"power2.out"},0).to(bottomLineRef.current, {rotation:-45, y:-8, duration:0.3, ease:"power2.out"},0)
 
  })
 
@@ -78,8 +87,8 @@ const Sidebar = () => {
       </nav>
       {/* hamburger menu */}
       <div className='fixed z-50 flex flex-col items-center justify-center gap-3 transition-all duration-300 bg-black rounded-full cursor-pointer w-14 h-14 md:w-20 md:h-20 top-4 right-10' onClick={toggleMenu}>
-        <span className="block w-8 h-0.5 bg-white rounded-full origin-center"></span>
-        <span className="block w-8 h-0.5 bg-white rounded-full origin-center"></span>
+        <span  ref={topLineRef} className="block w-8 h-0.5 bg-white rounded-full origin-center"></span>
+        <span ref={bottomLineRef} className="block w-8 h-0.5 bg-white rounded-full origin-center"></span>
       </div>
     </>
   );
