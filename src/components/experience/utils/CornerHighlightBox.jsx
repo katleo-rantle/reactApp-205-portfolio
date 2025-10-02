@@ -14,7 +14,7 @@ export function CornerHighlightBox({
   linkHref,
   onBoxClick,
   textScale = 60,
-  textDepth = 5,
+  textDepth = 10,
   fontUrl = '/fonts/BoldPixels_BoldPixels.json',
   textColor = 'red',
   children,

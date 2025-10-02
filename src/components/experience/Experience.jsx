@@ -11,7 +11,6 @@ import { Suspense, useEffect, useMemo, useRef } from 'react';
 import { angleToRadian } from '../../utils/angle';
 import { BackSide, MeshBasicMaterial } from 'three';
 import { RobotModel } from './RobotModel';
-import { ConsoleModel } from './ConsoleModel';
 import { DeskModel } from './DeskModel';
 import { LaptopModel } from './LaptopModel';
 import { BikeModel } from './BikeModel';
@@ -20,6 +19,10 @@ import { AvatarModel } from './AvatarModel';
 import { ChairModel } from './ChairModel';
 import { MouseModel } from './MouseModel';
 import { LightModel } from './LightModel';
+import { ClipboardModel } from './ClipboardModel';
+import { ShelfModel } from './ShelfModel';
+import { PhoneModel } from './PhoneModel';
+
 
 const minPolarAngle = angleToRadian(80);
 const maxPolarAngle = angleToRadian(89);
@@ -65,7 +68,7 @@ const Room = () => {
   );
 };
 
-function R3fDemo() {
+function Experience() {
   // const orbitControlsRef = useRef();
 
   // useEffect(() => {
@@ -103,10 +106,10 @@ function R3fDemo() {
           <Cube />
           {/* <Floor /> */}
           {/* <Room /> */}
-          <Float speed={5} floatingRange={[1.5,2]}>
+          <Float speed={2} floatingRange={[1.5,2]}>
             <RobotModel />
           </Float>
-          <ConsoleModel />
+          
           <DeskModel />
           <LaptopModel />
           <BikeModel />
@@ -115,9 +118,13 @@ function R3fDemo() {
           <ChairModel />
           <MouseModel />
           <LightModel />
+          <ClipboardModel/>
+          <ShelfModel/>
+          <PhoneModel/>
+          
         </Suspense>
       </Canvas>
     </div>
   );
 }
-export default R3fDemo;
+export default Experience;

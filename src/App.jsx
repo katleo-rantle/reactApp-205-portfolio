@@ -1,5 +1,5 @@
 import About from "./components/About";
-import R3fDemo from "./components/experience/R3fDemo";
+import Experience from "./components/experience/Experience";
 import Hero from "./components/Hero"
 import Navbar from "./components/Navbar"
 import Projects from "./components/Projects";
@@ -10,7 +10,7 @@ const App = () => {
   return (
     <>
     <Sidebar />
-      <R3fDemo/>
+      <Experience/>
       {/* <Navbar />
       <Hero />
       <Skills/>

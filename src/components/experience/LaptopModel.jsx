@@ -2,8 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
 import { angleToRadian } from '../../utils/angle';
 
-import { useFetchProjects } from '../../utils/fectchProjects';
-import { CornerHighlightBox } from './utils/CornerHighlightBox';
+import HitboxLayer from './utils/HitboxLayer';
 
 export function LaptopModel(props) {
   // box on edges
@@ -36,17 +35,7 @@ export function LaptopModel(props) {
   // };
   // Define properties for the first object (your original specs)
 
-  const object1Props = {
-    boxArgs: [500, 380, 100],
-    position: [-740, 410.812, 92.657],
-    rotation: [0, 7, 0], // Again, 7 radians is ~401 degrees. Maybe Math.PI/2, etc.
-    cornerCubeSize: 15,
-    hoverColor: 'black',
-    defaultColor: 'white',
-    labelText: 'Projects', // Text to show
-    linkHref: 'https://example.com', // Link to open on click
-    textScale: 80, // Larger text
-  };
+
 
   const screenTexture = useTexture('/cubemap/nx.jpg');
   return (
@@ -84,7 +73,7 @@ export function LaptopModel(props) {
         {/* screens */}
         <group
           name='Plane001'
-          position={[0, 381.812, -82.657]}
+          position={[0, 481.812, -82.657]}
           rotation={[-0.229, 0, 0]}
           scale={100}
         >
@@ -107,37 +96,10 @@ export function LaptopModel(props) {
           {/* <meshBasicMaterial map={screenTexture} />
           </mesh>   */}
         </group>
-        {/* 2nd screen */}
-        <group
-          name='Plane0012'
-          position={[440, 420.812, 82.657]}
-          rotation={[-0.229, 15, 0]}
-          scale={100}
-        >
-          <mesh
-            name='Plane001_digital_displays_0'
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane001_digital_displays_0.geometry}
-            material={materials.digital_displays}
-          />
-          {/* <meshBasicMaterial map={screenTexture} />
-          </mesh> */}
-          <mesh
-            name='Plane001_digital_display_sides_0'
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane001_digital_display_sides_0.geometry}
-            material={materials.digital_display_sides}
-          />
-          {/* <meshBasicMaterial map={screenTexture} />
-          </mesh>   */}
-        </group>
+    
         {/*  screen loop > grid */}
-        {/* Hitbox: Transparent Box mesh */}
-        <CornerHighlightBox {...object1Props}>
-          <mesh ref={hitboxRef}></mesh>
-        </CornerHighlightBox>
+       <HitboxLayer />
+        
         <group
           ref={groupRef}
           name='Plane003'

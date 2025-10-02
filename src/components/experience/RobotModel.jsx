@@ -3,6 +3,7 @@ import { useGLTF } from '@react-three/drei';
 import { angleToRadian } from '../../utils/angle';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { CornerHighlightBox } from './utils/CornerHighlightBox';
 
 export function RobotModel(props) {
   const robotRef = useRef();
@@ -11,8 +12,7 @@ export function RobotModel(props) {
 
   useGSAP(() => {
     const tl = gsap.timeline();
-    
-  
+
     tl.to(robotRef.current.position, {
       x: -4,
       y: 2,
@@ -20,19 +20,19 @@ export function RobotModel(props) {
       duration: 1,
       ease: 'power3.out',
     })
-    .to(robotRef.current.position, {
-      x: -2,
-      y: 2,
-      z: 1,
-      duration: 2,
-      ease: 'sine.inOut',
-    })
+      .to(robotRef.current.position, {
+        x: -2,
+        y: 2,
+        z: 1,
+        duration: 2,
+        ease: 'sine.inOut',
+      })
       .to(
         robotRef.current.position,
         { x: -1, y: 1.45, z: 0, duration: 2, ease: 'sine.out' },
         '-=0.1'
       )
-      
+
       .to(robotRef.current.rotation, { y: angleToRadian(180), duration: 3 })
       .to(robotRightArmRef.current.rotation, {
         x: -Math.PI,
@@ -49,17 +49,38 @@ export function RobotModel(props) {
         ease: 'power1.inOut',
       })
       .to(robotRightArmRef.current.rotation, {
-        z: Math.PI/2,
+        z: Math.PI / 2,
         duration: 1,
         repeat: 3,
         yoyo: true,
         ease: 'power1.inOut',
-      })
-      
-  }, [])
+      });
+  }, []);
+
+  // hitbox
+  const object1Props = {
+    boxArgs: [500, 380, 100],
+    position: [-740, 410.812, 92.657],
+    rotation: [0, angleToRadian(45), 0], // Again, 7 radians is ~401 degrees. Maybe Math.PI/2, etc.
+    cornerCubeSize: 15,
+    hoverColor: 'black',
+    defaultColor: 'white',
+    labelText: 'About', // Text to show
+    linkHref: 'https://example.com', // Link to open on click
+    textScale: 80, // Larger text
+  };
   return (
-    <group ref={robotRef} dispose={null} scale={5} position={[2, 0, 10]} rotation={[0, angleToRadian(180), 0]}>
+    <group
+      ref={robotRef}
+      dispose={null}
+      scale={5}
+      position={[2, 0, 10]}
+      rotation={[0, angleToRadian(180), 0]}
+    >
       <group position={[0, 0.24, 0.012]} rotation={[-Math.PI / 2, 0, 0]}>
+      <CornerHighlightBox {...object1Props}>
+        <mesh></mesh>
+      </CornerHighlightBox>
         <mesh
           castShadow
           receiveShadow
@@ -165,7 +186,11 @@ export function RobotModel(props) {
           material={materials.wheelHolderMAt}
         />
       </group> */}
-      <group position={[0.054, 0.145, -0.002]} rotation={[-Math.PI / 2, 0, 0]}  ref={robotRightArmRef}>
+      <group
+        position={[0.054, 0.145, -0.002]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        ref={robotRightArmRef}
+      >
         <mesh
           castShadow
           receiveShadow
