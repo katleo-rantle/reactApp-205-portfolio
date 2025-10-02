@@ -1,4 +1,6 @@
-import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef, useState } from "react";
 import { FaGithubAlt, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -7,13 +9,29 @@ const Sidebar = () => {
  const contactRef = useRef(null);
  const BottomLineRef = useRef(null);
  const TopLineRef = useRef(null);
- 
+ const timelineRef = useRef(null);
+ const [isOpen, setIsOpen] = useState(false)
+
+ const toggleMenu = () =>{
+  isOpen ? timelineRef.current.reverse() : timelineRef.current.play()
+  setIsOpen(!isOpen)
+ }
+
+ useGSAP(()=>{
+  gsap.set(navRef.current,{xPercent:100})
+  gsap.set([linksRef.current,contactRef.current],{autoAlpha:0, x:-20})
+  
+  timelineRef.current = gsap.timeline({paused:true}).to(navRef.current,{xPercent:0, duration:1, ease:"power3.out"})
+  .to(linksRef.current,{autoAlpha:1, x:0, stagger:0.1, duration:0.5, ease:"power2.out"}, "<")
+  .to(contactRef.current, {autoAlpha:1, x:0, duration:0.5, ease:"power2.out"}, "<0.2")
+
+ })
 
   return (
     <>
       <nav
         ref={navRef}
-        className='fixed z-50 flex flex-col justify-between w-full h-full px-10 uppercase bg-black text-white/80 py-28 gap-y-10 md:w-1/2 md:left-1/2'
+        className='fixed z-50 flex flex-col justify-between w-full h-full px-10 uppercase bg-black/70 text-white/80 py-28 gap-y-10 md:w-1/2 md:left-1/2'
       >
         <div className='flex flex-col text-5xl gap-y-2 md:text-6xl lg:text-8xl'>
           {['home', 'about', 'projects', 'contact'].map((section, index) => (
@@ -45,7 +63,7 @@ const Sidebar = () => {
               ].map(({ name, href, icon }, index) => (
                 <a
                   key={index}
-                  href
+                  href={href}
                   className='text-sm leading-loose traclking-widest uppercase hover:text-white transition-colors duration-300 cursor-pointer'
                 >
                   <div className='flex items-center gap-x-2'>
@@ -58,7 +76,8 @@ const Sidebar = () => {
           </div>
         </div>
       </nav>
-      <div className='fixed z-50 flex flex-col items-center justify-center gap-3 transition-all duration-300 bg-black rounded-full cursor-pointer w-14 h-14 md:w-20 md:h-20 top-4 right-10'>
+      {/* hamburger menu */}
+      <div className='fixed z-50 flex flex-col items-center justify-center gap-3 transition-all duration-300 bg-black rounded-full cursor-pointer w-14 h-14 md:w-20 md:h-20 top-4 right-10' onClick={toggleMenu}>
         <span className="block w-8 h-0.5 bg-white rounded-full origin-center"></span>
         <span className="block w-8 h-0.5 bg-white rounded-full origin-center"></span>
       </div>
