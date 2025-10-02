@@ -23,6 +23,7 @@ const HitboxLayer = () => {
     labelText: 'Projects',
     linkHref: 'https://example.com',
     textScale: 80,
+    url: '/projects',
   };
   const screenAboutHitbox = {
     boxArgs: [500, 300, 100],
@@ -34,6 +35,7 @@ const HitboxLayer = () => {
     labelText: 'About',
     linkHref: 'https://example.com',
     textScale: 80,
+    url: '/about',
   };
   const phoneHitbox = {
     boxArgs: [200, 50, 200],
@@ -45,6 +47,7 @@ const HitboxLayer = () => {
     labelText: 'Contact',
     linkHref: 'https://example.com',
     textScale: 80,
+    url: '/contact',
   };
 
   // --- 2. Render the components ---

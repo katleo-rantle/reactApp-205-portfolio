@@ -2,6 +2,9 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { Text3D } from '@react-three/drei';
 import * as THREE from 'three'; // Needed for Color
+import useUIStore from '../../../store/uiStore';
+import { useNavigate } from 'react-router-dom';
+
 
 export function CornerHighlightBox({
   boxArgs,
@@ -17,11 +20,15 @@ export function CornerHighlightBox({
   textDepth = 10,
   fontUrl = '/fonts/BoldPixels_BoldPixels.json',
   textColor = 'red',
+  url,
   children,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const cornerRefs = useRef([]);
   const textRef = useRef();
+  const { isMenuOpen: isOpen, openMenu } = useUIStore();
+
+  const navigate = useNavigate();
 
   // Calculate the final target position for the text label (default position)
   const [L, H] = boxArgs;
@@ -112,8 +119,12 @@ export function CornerHighlightBox({
 
   // Click Handler (remains the same)
   const handleClick = (event) => {
+    if(!isOpen){
+      openMenu();
+      navigate(url);
+    }
     if (linkHref) {
-      window.open(linkHref, '_blank');
+      // window.open(linkHref, '_blank');
     }
     if (onBoxClick) {
       onBoxClick(event);
