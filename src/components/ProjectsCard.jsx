@@ -2,7 +2,6 @@ import { FaGithubSquare } from "react-icons/fa"
 import {TbWorldWww} from 'react-icons/tb'
 
 const ProjectsCard = (props) => {
- console.log(props);
  
   const { title, img, url, urlGithub, techStack } = props;
   return (
@@ -29,7 +28,7 @@ const ProjectsCard = (props) => {
             return (
               <span
                 key={index}
-                class='bg-slate-200 text-sky-800 px-2 py-1 rounded-full text-sm/8 mr-2'
+                className='bg-slate-200 text-sky-800 px-2 py-1 rounded-full text-sm/8 mr-2'
               >
                 {item}
               </span>

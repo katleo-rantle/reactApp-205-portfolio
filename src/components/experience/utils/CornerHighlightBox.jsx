@@ -19,13 +19,16 @@ export function CornerHighlightBox({
   textScale = 60,
   textDepth = 10,
   fontUrl = '/fonts/BoldPixels_BoldPixels.json',
+  fontUrl2 = '/fonts/Bitwise_Regular.json',
   textColor = 'red',
   url,
+  index = 0, // 👈 Added index prop
   children,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const cornerRefs = useRef([]);
   const textRef = useRef();
+  const indexTextRef = useRef();
   const { isMenuOpen: isOpen, openMenu } = useUIStore();
 
   const navigate = useNavigate();
@@ -67,6 +70,20 @@ export function CornerHighlightBox({
       const target = isHovered ? targetPos : { x: 0, y: 0, z: 0 };
 
       cornerTl.to(mesh.position, target, index * 0.01);
+
+      if (isHovered) {
+        // ON HOVER: Scale up (show) and move to corner position
+        cornerTl.to(mesh.scale, { x: 1, y: 1, z: 1, duration: 0.2 }, 0);
+        cornerTl.to(mesh.position, targetPos, 0.1);
+      } else {
+        // ON LEAVE: Move back to center (optional) and scale down (hide)
+        cornerTl.to(mesh.position, { x: 0, y: 0, z: 0, duration: 0.3 }, 0);
+        cornerTl.to(
+          mesh.scale,
+          { x: 0.001, y: 0.001, z: 0.001, duration: 0.2 },
+          0.2
+        );
+      }
     });
 
     // --- 2. Text Animation (New Logic) ---
@@ -107,6 +124,32 @@ export function CornerHighlightBox({
       }
     }
 
+    // Define the heartbeat timeline
+    const heartbeatTl = gsap.timeline({
+      defaults: { ease: 'power1.easeInOut'},
+      repeat: -1, // Repeat indefinitely
+      yoyo: true, // Go back and forth (pulse)
+      repeatDelay: 2, // Pause between heartbeats
+      stagger: 4,
+    });
+
+    // GSAP Timeline for text opacity (fade in/out) and rotation
+    if (indexTextRef.current) {
+      heartbeatTl
+        .to(indexTextRef.current.scale, {
+          x: 1.1,
+          y: 1.1,
+          z: 1.1,
+          duration: 0.25,
+        }) // Pulse up
+        .to(indexTextRef.current.scale, {
+          x: 1.0,
+          y: 1.0,
+          z: 1.0,
+          duration: 0.25,
+        }); // Settle down
+    }
+
     return () => {
       cornerTl.kill();
       textTl.kill();
@@ -119,7 +162,7 @@ export function CornerHighlightBox({
 
   // Click Handler (remains the same)
   const handleClick = (event) => {
-    if(!isOpen){
+    if (!isOpen) {
       openMenu();
       navigate(url);
     }
@@ -149,6 +192,7 @@ export function CornerHighlightBox({
           key={index}
           ref={(el) => (cornerRefs.current[index] = el)}
           position={[0, 0, 0]} // Start at the center
+          scale={[0.001, 0.001, 0.001]} // 👈 Start hidden by default
         >
           <boxGeometry
             args={[cornerCubeSize, cornerCubeSize, cornerCubeSize]}
@@ -170,6 +214,19 @@ export function CornerHighlightBox({
       >
         {labelText}
         <meshBasicMaterial color={textColor} transparent opacity={0} />
+      </Text3D>
+      <Text3D
+        position={[0, 0, cornerCubeSize * -2 + 0.1]} // Z slightly in front of the sphere (radius is cornerCubeSize*2)
+        size={20 * 2.5} // Make the number large relative to the circle
+        font={fontUrl2}
+        height={5}
+        ref={indexTextRef}
+        curveSegments={12}
+        anchorX='middle'
+        anchorY='center'
+      >
+        {index+1} {/* Display the index number (1-based) */}
+        <meshBasicMaterial color={'white'} />
       </Text3D>
 
       {/* Render the children */}

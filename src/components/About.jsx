@@ -3,12 +3,12 @@ import SectionTitle from './SectionTitle';
 
 const About = () => {
   return (
-    <section className=' bg-white py-20' id='about'>
+    <section className=' bg-white/10 py-20' id='about'>
       <div className='align-elements grid md:grid-cols-2 items-center gap-16'>
         <img src={aboutSvg} alt='' className='w-full h-64' />
         <article>
           <SectionTitle text={'about me'} />
-          <p className='text-slate-600 mt-8 leading-loose'>
+          <p className='text-white/80 mt-8 leading-loose'>
             As an aspiring developer, I am dedicated to continuously learning
             and practicing coding and technology to build a strong foundation
             for a career in software development. My current focus is on

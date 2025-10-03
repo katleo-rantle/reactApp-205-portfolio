@@ -7,7 +7,7 @@ import {
   useTexture,
 } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
-import { Suspense, useEffect, useMemo, useRef } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { angleToRadian } from '../../utils/angle';
 import { BackSide, MeshBasicMaterial } from 'three';
 import { RobotModel } from './RobotModel';
@@ -22,6 +22,7 @@ import { LightModel } from './LightModel';
 import { ClipboardModel } from './ClipboardModel';
 import { ShelfModel } from './ShelfModel';
 import { PhoneModel } from './PhoneModel';
+import CustomLoader from './CustomLoader';
 
 
 const minPolarAngle = angleToRadian(80);
@@ -81,50 +82,55 @@ function Experience() {
   const targetPosition = [0,6,2]
   // const targetPosition = [0,0,0]
 
+  const [ready, setReady] = useState(false);
+
   return (
-    <div className='h-screen w-full'>
-      <Canvas shadows>
-        <Suspense fallback={null}>
-          <PerspectiveCamera makeDefault position={[4, 2, -10]} />
-          <ambientLight intensity={Math.PI / 2} />
-          {/* <ambientLight args={["white",1]}  /> */}
+    <>
+      {/* <CustomLoader /> */}
+      {!ready && <CustomLoader onFinish={() => setReady(true)} />}
+      <div className='h-screen w-full'>
+        <Canvas shadows>
+          <Suspense fallback={null}>
+            <PerspectiveCamera makeDefault position={[4, 2, -10]} />
+            <ambientLight intensity={Math.PI / 2} />
+            {/* <ambientLight args={["white",1]}  /> */}
 
-          {/* <pointLight position={[0, 10, 10]} decay={0} />/ */}
-          {/* <directionalLight intensity={1} position={[2, 5, 2]} /> */}
+            {/* <pointLight position={[0, 10, 10]} decay={0} />/ */}
+            {/* <directionalLight intensity={1} position={[2, 5, 2]} /> */}
 
-          <OrbitControls
-            target={targetPosition}
-            enablePan={true}
-            minDistance={7}
-            maxDistance={10}
-            minPolarAngle={minPolarAngle}
-            maxPolarAngle={maxPolarAngle}
-          />
+            <OrbitControls
+              target={targetPosition}
+              enablePan={true}
+              minDistance={7}
+              maxDistance={10}
+              minPolarAngle={minPolarAngle}
+              maxPolarAngle={maxPolarAngle}
+            />
 
-          {/* <gridHelper args={[20, 20]} position={[0, 0, 0]} /> */}
+            {/* <gridHelper args={[20, 20]} position={[0, 0, 0]} /> */}
 
-          <Cube />
-          {/* <Floor /> */}
-          {/* <Room /> */}
-          <Float speed={2} floatingRange={[1.5,2]}>
-            <RobotModel />
-          </Float>
-          
-          <DeskModel />
-          <LaptopModel />
-          <BikeModel />
-          <PlantModel />
-          <AvatarModel />
-          <ChairModel />
-          <MouseModel />
-          <LightModel />
-          <ClipboardModel/>
-          <ShelfModel/>
-          <PhoneModel/>
-          
-        </Suspense>
-      </Canvas>
-    </div>
+            <Cube />
+            {/* <Floor /> */}
+            {/* <Room /> */}
+            <Float speed={2} floatingRange={[1.5, 2]}>
+              <RobotModel />
+            </Float>
+
+            <DeskModel />
+            <LaptopModel />
+            <BikeModel />
+            <PlantModel />
+            <AvatarModel ready={ready} />
+            <ChairModel />
+            <MouseModel />
+            <LightModel />
+            <ClipboardModel />
+            <ShelfModel />
+            <PhoneModel />
+          </Suspense>
+        </Canvas>
+      </div>
+    </>
   );
 }
 export default Experience;

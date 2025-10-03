@@ -4,18 +4,20 @@ import { angleToRadian } from '../../utils/angle';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-export function AvatarModel(props) {
+export function AvatarModel({ready}) {
   const { nodes, materials } = useGLTF('/models/avatar.glb');
   // const {animations:typiAnimation} = useFBX('animations/Happy Idle.fbx')
   // const {animations:typingAnimation} = useFBX('animations/Happy Idle.fbx')
   const { animations: wavingAnimation } = useFBX('animations/Waving low.fbx');
   const { animations: typingAnimation } = useFBX('animations/Typing.fbx');
+  const { animations: standingAnimation } = useFBX('animations/Happy Idle.fbx');
   const animationGroup = useRef();
 
   // console.log(typingAnimation);
 
   wavingAnimation[0].name = 'waving'; // change name from mixamo.com
   typingAnimation[0].name = 'typing';
+  standingAnimation[0].name = 'standing';
 
   const { actions, mixer } = useAnimations(
     [wavingAnimation[0], typingAnimation[0]],
@@ -46,26 +48,28 @@ export function AvatarModel(props) {
  
 
   useEffect(() => {
-    if (!actions['waving'] || !actions['typing']) return;
+    // Always play standing idle if not ready
+    // if (!ready && actions['standing']) {
+    //   actions['standing'].reset().setLoop(THREE.LoopOnce, 1).play();
+    //   return; // don't run waving/typing yet
+    // }
+    //if (!actions['waving'] || !actions['typing']) return;
 
     // Play waving first
-    actions['waving'].reset().setLoop(THREE.LoopOnce, 1).play()
+    //if (!ready) return; // wait until model is ready
+    actions['waving'].reset().setLoop(THREE.LoopOnce, 1).play();
 
-    
-    mixer.addEventListener("finished", (e)=>{
+    mixer.addEventListener('finished', (e) => {
       // When waving finishes, play typing
       if (e.action._clip.name === 'waving') {
-        
-        actions['waving'].reset().fadeOut(0.5)
+        actions['waving'].reset().fadeOut(0.5);
         actions['typing'].reset().fadeIn(0.5).play();
       }
-        
-    })
-    
+    });
 
     // Cleanup event listener on unmount
     return () => {
-      mixer.removeEventListener()
+      mixer.removeEventListener();
     };
   }, [actions]);
 

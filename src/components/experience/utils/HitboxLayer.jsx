@@ -19,11 +19,12 @@ const HitboxLayer = () => {
     rotation: [0, angleToRadian(45), 0],
     cornerCubeSize: 15,
     hoverColor: 'black',
-    defaultColor: 'white',
+    defaultColor: 'black',
     labelText: 'Projects',
     linkHref: 'https://example.com',
     textScale: 80,
     url: '/projects',
+    index: 0, // 👈 Added index prop
   };
   const screenAboutHitbox = {
     boxArgs: [500, 300, 100],
@@ -31,11 +32,12 @@ const HitboxLayer = () => {
     rotation: [-angleToRadian(13), 0, 0],
     cornerCubeSize: 15,
     hoverColor: 'black',
-    defaultColor: 'white',
+    defaultColor: 'black',
     labelText: 'About',
     linkHref: 'https://example.com',
     textScale: 80,
     url: '/about',
+    index: 1, // 👈 Added index prop
   };
   const phoneHitbox = {
     boxArgs: [200, 50, 200],
@@ -43,11 +45,12 @@ const HitboxLayer = () => {
     rotation: [0, angleToRadian(15), 0],
     cornerCubeSize: 8,
     hoverColor: 'black',
-    defaultColor: 'white',
+    defaultColor: 'black',
     labelText: 'Contact',
     linkHref: 'https://example.com',
     textScale: 80,
     url: '/contact',
+    index: 2, // 👈 Added index prop
   };
 
   // --- 2. Render the components ---
