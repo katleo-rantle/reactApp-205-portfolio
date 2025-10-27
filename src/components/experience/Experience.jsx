@@ -120,13 +120,13 @@ function Experience() {
             <LaptopModel />
             <BikeModel />
             <PlantModel />
-            <AvatarModel ready={ready} />
             <ChairModel />
             <MouseModel />
             <LightModel />
             <ClipboardModel />
             <ShelfModel />
             <PhoneModel />
+            <AvatarModel ready={ready} />
           </Suspense>
         </Canvas>
       </div>

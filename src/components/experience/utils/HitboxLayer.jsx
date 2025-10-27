@@ -1,6 +1,6 @@
 // HitboxLayer.jsx
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 // Assuming angleToRadian is available via props or an import
 // NOTE: We need the angleToRadian utility function here!
 // Let's assume you pass it as a prop or import it like this:
@@ -10,9 +10,37 @@ import React from 'react';
 
 import { angleToRadian } from '../../../utils/angle';
 import { CornerHighlightBox } from './CornerHighlightBox';
+import gsap from 'gsap';
+
+// Create refs for each index text
+  
+
+
 
 const HitboxLayer = () => {
   // --- 1. Define all object properties ---
+
+  const indexTextRefs = [useRef(), useRef(), useRef()];
+  const scaleup = { x: 0.5, y: 0.5, z: 0.5 };
+  const scaledown = { x: 1.0, y: 1.0, z: 1.0 };
+
+    useEffect(() => {
+      // Animate each index text in sequence
+      const tl = gsap.timeline({ repeat: -1});
+      indexTextRefs.forEach((ref, i) => {
+        tl
+        .to(ref.current.scale, { ...scaleup, duration: 0.25 })
+        // .to(ref.current.rotation, {
+        //   y: '+=' + Math.PI * 2, // Rotate 360 degrees relative to current rotation
+        //   duration: 2.5,
+        //   ease: 'none',
+        // }, "<")
+          .to(ref.current.scale, { ...scaledown, duration: 0.25 })
+          .to({}, { duration: 3 }); // Pause for 3 seconds
+      });
+      return () => tl.kill();
+    }, []);
+
   const screenProjectsHitbox = {
     boxArgs: [500, 300, 100],
     position: [-740, 410.812, 92.657],
@@ -56,9 +84,15 @@ const HitboxLayer = () => {
   // --- 2. Render the components ---
   return (
     <>
-      <CornerHighlightBox {...screenProjectsHitbox} />
-      <CornerHighlightBox {...screenAboutHitbox} />
-      <CornerHighlightBox {...phoneHitbox} />
+      <CornerHighlightBox
+        {...screenProjectsHitbox}
+        indexTextRef={indexTextRefs[0]}
+      />
+      <CornerHighlightBox
+        {...screenAboutHitbox}
+        indexTextRef={indexTextRefs[1]}
+      />
+      <CornerHighlightBox {...phoneHitbox} indexTextRef={indexTextRefs[2]} />
     </>
   );
 };

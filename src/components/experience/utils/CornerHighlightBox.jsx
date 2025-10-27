@@ -4,6 +4,7 @@ import { Text3D } from '@react-three/drei';
 import * as THREE from 'three'; // Needed for Color
 import useUIStore from '../../../store/uiStore';
 import { useNavigate } from 'react-router-dom';
+import { BackSide } from 'three';
 
 
 export function CornerHighlightBox({
@@ -19,16 +20,16 @@ export function CornerHighlightBox({
   textScale = 60,
   textDepth = 10,
   fontUrl = '/fonts/BoldPixels_BoldPixels.json',
-  fontUrl2 = '/fonts/Bitwise_Regular.json',
+  fontUrl2 = '/fonts/Uchrony Circle_Regular.json',
   textColor = 'red',
   url,
   index = 0, // 👈 Added index prop
+  indexTextRef, // 👈 Added indexTextRef prop
   children,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const cornerRefs = useRef([]);
   const textRef = useRef();
-  const indexTextRef = useRef();
   const { isMenuOpen: isOpen, openMenu } = useUIStore();
 
   const navigate = useNavigate();
@@ -126,29 +127,12 @@ export function CornerHighlightBox({
 
     // Define the heartbeat timeline
     const heartbeatTl = gsap.timeline({
-      defaults: { ease: 'power1.easeInOut'},
+      defaults: { ease: 'power1.easeInOut' },
       repeat: -1, // Repeat indefinitely
       yoyo: true, // Go back and forth (pulse)
       repeatDelay: 2, // Pause between heartbeats
       stagger: 4,
     });
-
-    // GSAP Timeline for text opacity (fade in/out) and rotation
-    if (indexTextRef.current) {
-      heartbeatTl
-        .to(indexTextRef.current.scale, {
-          x: 1.1,
-          y: 1.1,
-          z: 1.1,
-          duration: 0.25,
-        }) // Pulse up
-        .to(indexTextRef.current.scale, {
-          x: 1.0,
-          y: 1.0,
-          z: 1.0,
-          duration: 0.25,
-        }); // Settle down
-    }
 
     return () => {
       cornerTl.kill();
@@ -217,16 +201,18 @@ export function CornerHighlightBox({
       </Text3D>
       <Text3D
         position={[0, 0, cornerCubeSize * -2 + 0.1]} // Z slightly in front of the sphere (radius is cornerCubeSize*2)
-        size={20 * 2.5} // Make the number large relative to the circle
+        size={25 * 2.5} // Make the number large relative to the circle
         font={fontUrl2}
         height={5}
         ref={indexTextRef}
-        curveSegments={12}
+        // curveSegments={12}
         anchorX='middle'
         anchorY='center'
       >
-        {index+1} {/* Display the index number (1-based) */}
-        <meshBasicMaterial color={'white'} />
+        {index + 1} {/* Display the index number (1-based) */}
+        <meshBasicMaterial color={'black'} />
+        {/* <meshBasicMaterial attach='material-0' color='black' side={BackSide} /> */}
+        {/* <meshBasicMaterial attach='material-1' color={'red'} /> */}
       </Text3D>
 
       {/* Render the children */}

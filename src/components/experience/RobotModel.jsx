@@ -14,11 +14,25 @@ export function RobotModel(props) {
     const tl = gsap.timeline();
 
     tl.to(robotRef.current.position, {
+      x: 4,
+      y: 3,
+      z: -1,
+      duration: 3,
+      ease: 'power1.Out',
+    })
+    .to(robotRef.current.position, {
+      x: 4,
+      y: 2,
+      z: 5,
+      duration: 3,
+      ease: 'power1.inOut',
+    })
+    .to(robotRef.current.position, {
       x: -4,
       y: 2,
       z: 5,
-      duration: 1,
-      ease: 'power3.out',
+      duration: 3,
+      ease: 'power1.inOut',
     })
       .to(robotRef.current.position, {
         x: -2,
